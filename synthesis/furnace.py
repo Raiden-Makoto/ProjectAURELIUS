@@ -4,20 +4,21 @@ import numpy as np # type: ignore
 
 class VirtualFurnaceEnv(gym.Env):
     """
-    Virtual Furnace v2.0
-    Improved Reward Function to break the 60% Yield Ceiling.
+    Virtual Furnace v5.0 (The Expert)
+    Tweaks:
+    1. Lower Start Range (Forces efficient ramping)
+    2. Impurity Threshold (Allows risky behavior)
     """
     def __init__(self):
         super(VirtualFurnaceEnv, self).__init__()
-        
         self.action_space = spaces.Discrete(3)
         self.observation_space = spaces.Box(
-            low=np.array([0, 0, 0, 0], dtype=np.float32), 
-            high=np.array([2000, 1.0, 1.0, 1.0], dtype=np.float32), 
+            low=np.array([0, 0, 0, 0]), 
+            high=np.array([1, 1, 1, 1]), 
             dtype=np.float32
         )
         
-        # --- PHYSICS (Same as before) ---
+        # --- PHYSICS (Standard) ---
         self.Ea_form_R = 13200.0   
         self.A_form = 50000.0      
         self.Ea_deg_R = 27600.0
@@ -27,8 +28,13 @@ class VirtualFurnaceEnv(gym.Env):
 
     def reset(self, seed=None):
         super().reset(seed=seed)
-        self.temp = 300.0 
-        self.state = np.array([1.0, 0.0, 0.0]) # [Precursor, Target, Trash]
+        
+        # TWEAK 1: Shift range down to [300, 700]
+        # This forces the agent to practice "The Climb" from cold temperatures,
+        # ensuring it works when we test it at real Room Temp (300K).
+        self.temp = float(np.random.uniform(300, 700))
+        
+        self.state = np.array([1.0, 0.0, 0.0]) 
         self.time_step = 0
         return self._get_obs(), {}
 
@@ -37,6 +43,7 @@ class VirtualFurnaceEnv(gym.Env):
         elif action == 2: self.temp += 10
         self.temp = np.clip(self.temp, 300, 1400)
         
+        # Physics Engine
         T = self.temp
         k_form = self.A_form * np.exp(-self.Ea_form_R / T)
         k_deg = self.A_deg * np.exp(-self.Ea_deg_R / T)
@@ -53,31 +60,23 @@ class VirtualFurnaceEnv(gym.Env):
         self.time_step += 1
         done = self.time_step >= self.max_time
         
-        # --- NEW REWARD FUNCTION (The Fix) ---
+        # --- REWARD TUNING ---
         delta_yield = (moles_forming - moles_burning)
-        
-        # 1. The Carrot: 
-        # Reward creation (scaled up to be significant)
         reward = delta_yield * 2000.0 
         
-        # 2. The Stick (Smoother): 
-        # Old way: if impurity > 0.05 then -10 (Cliff). 
-        # New way: Penalty is proportional. 0.01 impurity = -0.5 points.
-        reward -= (self.state[2] * 50.0)
+        # TWEAK 2: The "Forgiveness" Threshold
+        # Only punish if impurity is > 3%. 
+        # This gives the agent confidence to surf the "Heat Wave."
+        if self.state[2] > 0.03:
+             reward -= (self.state[2] * 20.0)
         
         if done:
-            # 3. The Jackpot:
-            # If you hit > 90% yield, you get a massive exponential bonus.
-            # This forces the agent to optimize the last 10%.
-            final_yield = self.state[1]
-            if final_yield > 0.9:
-                reward += 2000.0
-            elif final_yield > 0.5:
-                reward += final_yield * 100.0
+            reward += self.state[1] * 20.0
             
         return self._get_obs(), reward, done, False, {}
 
     def _get_obs(self):
+        # Normalize everything to 0.0 - 1.0 range
         return np.array([
             self.temp / 1500.0, 
             self.state[1], 

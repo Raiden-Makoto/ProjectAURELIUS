@@ -20,8 +20,8 @@ print("👨‍🔬 TRAINING STARTED: The agent is learning thermal kinetics...")
 print("    (This will take about 30 seconds on a laptop)")
 
 # 3. TRAINING LOOP
-# The agent tries 50,000 minutes of experiment time to find the pattern.
-model.learn(total_timesteps=50000)
+# The agent tries 150,000 minutes of experiment time to find the pattern.
+model.learn(total_timesteps=150000)
 print("✅ TRAINING COMPLETE.")
 
 # 4. THE FINAL EXAM
