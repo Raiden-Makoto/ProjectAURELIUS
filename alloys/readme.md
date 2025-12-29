@@ -2,7 +2,7 @@
 
 ![Status](https://img.shields.io/badge/Status-Success-green) ![Yield](https://img.shields.io/badge/Beta_Yield-83.7%25-blue) ![Material](https://img.shields.io/badge/Target-Li3PS4-purple)
 
-**Project AUERLIUS-2** is a specialized reinforcement learning module designed to solve the "Metastable Trap" problem in materials science. It autonomously discovered a non-intuitive heating protocol to synthesize **$\beta-Li_3PS_4$**, a superionic conductor for solid-state batteries, achieving **83.7% purity**.
+**Project AUERLIUS-2** is a specialized reinforcement learning module designed to solve the "Metastable Trap" problem in materials science. It autonomously discovered a non-intuitive heating protocol to synthesize **$\beta-Li_3PS_4$**, a superionic conductor for solid-state batteries, achieving **83.7% purity**. This project builds off the work presented [here](https://github.com/Raiden-Makoto/LunarCharged).
 
 ---
 
