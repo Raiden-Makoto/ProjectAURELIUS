@@ -1,4 +1,4 @@
-# ProjectAURELIUS
+![Banner](aurelius.png)
 
 **Autonomous Rare-earth Exploration & Learning regarding Ionic Unit Structures**
 
