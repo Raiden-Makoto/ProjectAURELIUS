@@ -27,13 +27,15 @@ history_charge = []
 print("\nRunning Battery Diagnostic Cycle...")
 while not done:
     action, _ = model.predict(obs)
+    
+    # --- CHANGE THIS PART ---
+    # Discrete was: J = action
+    # Continuous is:
+    J = action[0] # Extract float from array
+    
     obs, _, done, _, _ = env.step(action)
     
-    # Map action back to Current for plotting
-    if action == 0: J = 0.0
-    elif action == 1: J = 0.1
-    elif action == 2: J = 1.0
-    
+    # Recording for plot
     history_current.append(J)
     history_sei.append(obs[0]) # Thickness
     history_charge.append(obs[2]) # Capacity
