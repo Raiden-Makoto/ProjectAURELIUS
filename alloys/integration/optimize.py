@@ -12,6 +12,7 @@ import numpy as np # type: ignore
 env = BatteryInterfaceEnv()
 
 # 2. Train Agent
+# NOTE: Observation space is 3D [SEI, Resistance, Charge]
 print("🔋 Starting Interface Stabilization Training...")
 model = PPO("MlpPolicy", env, verbose=1)
 model.learn(total_timesteps=50000)

@@ -52,6 +52,12 @@ Human literature typically suggests a constant soak at 180°C. The AI discovered
 
 ---
 
-## 🔮 Future Work
-* **Battery Integration:** Simulate the interface stability of this synthesized electrolyte against a Lithium Metal Anode (**in progress**).
-* **Doping Strategy:** Use Bayesian Optimization to select dopants (e.g., Iodine) to widen the stability window of the $\beta$-phase.
+## Battery Integration
+
+The AI developed a high-throughput strategy, maxxing out the charging current for almost the entire cycle to achieve peak capacity (~$200$ mAh) rather than adhering to conservative "break-in" protocols. While the immediate capacity gains outweighed the penalties for bypassing the initial formation phase, providing exceptional short-term performance, this "fast and furious" approach would be catastrophic for long-term battery health. In a real-world device, skipping the protective SEI formation at low current would lead to rapid electrolyte consumption, irreversible lithium plating and an extremely shortened cycle life.
+
+![Battery Formation Cycle](integration/fcycle.png)
+
+## Doping Strategy:
+
+Use Bayesian Optimization to select dopants (e.g., Iodine) to widen the stability window of the $\beta$-phase.
