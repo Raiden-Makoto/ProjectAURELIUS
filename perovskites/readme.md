@@ -3,7 +3,7 @@
 
 ![Status](https://img.shields.io/badge/Status-Complete-green) ![Yield](https://img.shields.io/badge/Final_Yield-87.6%25-blue) ![Agent](https://img.shields.io/badge/AI-Reinforcement_Learning-orange)
 
-**Project AURELIUS-1** is an end-to-end AI pipeline that automates the lifecycle of materials science. It successfully demonstrated the autonomous discovery of a novel stable Perovskite ($CaGeTe_3$) and trained a Reinforcement Learning agent to optimize its synthesis in a virtual furnace, achieving a **87.6% yield** without human intervention.
+**Project AURELIUS-1** is an end-to-end AI pipeline that automates the lifecycle of materials science. It successfully demonstrated the autonomous discovery of a novel stable Perovskite ($CaGeTe_3$) and trained a Reinforcement Learning agent to optimize its synthesis in a virtual furnace, achieving a **87.6% yield** without human intervention. This project builds off of the high-profile candidates previously proposed [here](https://github.com/Raiden-Makoto/Geoculus)
 
 ---
 
