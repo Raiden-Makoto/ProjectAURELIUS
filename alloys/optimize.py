@@ -6,11 +6,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np # type: ignore
 import matplotlib.pyplot as plt # type: ignore
 from stable_baselines3 import PPO # type: ignore
-from furnace import PerovskiteFurnaceEnv # Imports your physics simulator
+from furnace import AlloyFurnaceEnv # Imports your physics simulator
 
 # 1. SETUP THE LAB
 # We initialize the environment with the scientific values you added
-env = PerovskiteFurnaceEnv()
+env = AlloyFurnaceEnv()
 
 # 2. HIRE THE OPERATOR (The Agent)
 # We use PPO (Proximal Policy Optimization), a standard robust RL algorithm.
@@ -40,8 +40,7 @@ while not done:
     
     # We log the data to plot it
     # Note: obs[0] is normalized, so we un-normalize it for the plot
-    # The env clips at 1400K, but let's check the env max to be safe
-    current_temp = obs[0] * 1500.0 
+    current_temp = obs[0] * 750.0 
     
     path_temp.append(current_temp) 
     path_yield.append(obs[1])
@@ -57,14 +56,14 @@ ax1.set_xlabel('Time (minutes)')
 ax1.set_ylabel('Furnace Temp (K)', color=color)
 ax1.plot(path_temp, color=color, linewidth=2, label="Temperature Profile")
 ax1.tick_params(axis='y', labelcolor=color)
-ax1.set_ylim(0, 1500)
+ax1.set_ylim(0, 750)
 ax1.grid(True, alpha=0.3)
 
 # Plot Yield (Blue Line)
 ax2 = ax1.twinx() 
 color = 'tab:blue'
 ax2.set_ylabel('Phase Fraction', color=color)
-ax2.plot(path_yield, color=color, linewidth=2, label="CaGeTe3 Yield")
+ax2.plot(path_yield, color=color, linewidth=2, label="Lithium Thiophosphate Yield")
 ax2.plot(path_impurity, color='black', linewidth=1, linestyle="--", label="Impurity (Degradation)")
 ax2.tick_params(axis='y', labelcolor=color)
 ax2.set_ylim(0, 1.1)
@@ -74,7 +73,7 @@ lines_1, labels_1 = ax1.get_legend_handles_labels()
 lines_2, labels_2 = ax2.get_legend_handles_labels()
 ax1.legend(lines_1 + lines_2, labels_1 + labels_2, loc='center right')
 
-plt.title(f"RL-Optimized Synthesis for CaGeTe3\nFinal Yield: {path_yield[-1]*100:.1f}%")
+plt.title(f"RL-Optimized Synthesis for Lithium Thiophosphate\nFinal Yield: {path_yield[-1]*100:.1f}%")
 plt.tight_layout()
 
 # Save to file (in the synthesis directory)

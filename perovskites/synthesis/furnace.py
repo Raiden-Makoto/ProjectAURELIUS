@@ -2,7 +2,7 @@ import gymnasium as gym # type: ignore
 from gymnasium import spaces # type: ignore
 import numpy as np # type: ignore
 
-class VirtualFurnaceEnv(gym.Env):
+class PerovskiteFurnaceEnv(gym.Env):
     """
     Virtual Furnace v8.0 (Calibrated Physics)
     Changes:
@@ -11,7 +11,7 @@ class VirtualFurnaceEnv(gym.Env):
     2. Max Time = 300 (5 Hours) to allow for a perfect soak.
     """
     def __init__(self):
-        super(VirtualFurnaceEnv, self).__init__()
+        super(PerovskiteFurnaceEnv, self).__init__()
         self.action_space = spaces.Discrete(3)
         self.observation_space = spaces.Box(
             low=np.array([0, 0, 0, 0]), 
