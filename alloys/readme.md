@@ -1,6 +1,7 @@
 # Autonomous Synthesis of Solid-State Electrolytes
 
-![Status](https://img.shields.io/badge/Status-Success-green) ![Yield](https://img.shields.io/badge/Beta_Yield-83.7%25-blue) ![Material](https://img.shields.io/badge/Target-Li3PS4-purple)
+![Status](https://img.shields.io/badge/Status-Success-green) ![Yield](https://img.shields.io/badge/Beta_Yield-83.7%25-blue) ![Material](https://img.shields.io/badge/Target-Li3PS4-purple) [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Live%20Demo-blue)](https://42cummer-aureliusbatteryoptimizer.hf.space)
+
 
 **Project AUERLIUS-2** is a specialized reinforcement learning module designed to solve the "Metastable Trap" problem in materials science. It autonomously discovered a non-intuitive heating protocol to synthesize **$\beta-Li_3PS_4$**, a superionic conductor for solid-state batteries, achieving **83.7% purity**. This project builds off the work presented [here](https://github.com/Raiden-Makoto/LunarCharged).
 
@@ -79,3 +80,10 @@ RESULT: STABLE MATERIAL (Argyrodite-like (High Stability Candidate))
 ```
 
 A defect-chemistry validation confirmed the physical viability of this composition, demonstrating that the aliovalent charge imbalance is stabilized by the formation of Lithium vacancies. The final predicted formula, **$Li_{2.01}PS_{3.01}Cl_{0.97}$**, sits precisely at the theoretical lower limit of carrier concentration ($Li \approx 2.0$), effectively identifying a stable **Argyrodite-class electrolyte** ($Li_6PS_5Cl$ analog) without compromising the conductive network.
+
+## AURELIUS BATTERY OPTIMIZER
+The *Aurelius Battery Optimized* is a standalone backend service that allows researchers to:
+* **Screen Superionic Conductors:** Simulate complex co-doping recipes (e.g., mixing Cl, Br, and I) using Vegard's Law for lattice strain estimation.
+* **Real-Time Inference:** Uses **Server-Side Streaming (NDJSON)** to process large batches of candidates without connection timeouts.
+* **Physics-Aware Validation:** Automatically validates charge balance, solubility limits, and lattice stability before suggesting a candidate for synthesis.
+* **Resilient Architecture:** Integrated with the **Materials Project API** for ground-truth thermodynamic data, with a graceful fallback to theoretical estimation for novel compounds.
